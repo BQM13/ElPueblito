@@ -1,0 +1,242 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9;
+    color: #263f4f;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* HEADER */
+header {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: #263f4f;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #609db4;
+    color: #ffffff;
+    border-radius: 10px;
+}
+
+/* MAIN */
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 2rem;
+}
+
+.login-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.5rem;
+    color: #609db4;
+    margin-bottom: 1rem;
+}
+
+.login-container p {
+    color: #263f4f;
+    margin-bottom: 2rem;
+}
+
+/* FORMULARIO */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+label {
+    text-align: left;
+    font-weight: 600;
+    color: #263f4f;
+}
+
+input[type="email"],
+input[type="password"] {
+    padding: 0.75rem 1rem;
+    border: 2px solid #609db4;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+button[type="submit"] {
+    background-color: #263f4f;
+    color: #ffffff;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #609db4;
+}
+
+/* Enlace de recuperar contraseña */
+.login-container a {
+    margin-top: 1rem;
+    color: #609db4;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+/* FOOTER */
+footer {
+    width: 100%;
+    background-color: #1d3b4f;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+footer a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+footer a:hover {
+    color: #609db4;
+}
+
+/* Sección del logo + nombre */
+footer .navbar-brand {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+footer .navbar-brand img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+footer .navbar-brand span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Íconos de redes sociales */
+footer .btn-outline-primary {
+    border: 2px solid #609db4;
+    color: #609db4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    margin-right: 10px;
+    transition: all 0.3s ease;
+}
+
+footer .btn-outline-primary:hover {
+    background-color: #609db4;
+    color: #ffffff;
+}
+
+/* Títulos de la información */
+footer h3 {
+    color: #609db4;
+    margin-bottom: 20px;
+}
+
+footer h4 {
+    font-size: 1.2rem;
+    color: #609db4;
+    margin-right: 10px;
+}
+
+footer h5 {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+/* Info de dirección, correo, teléfono */
+footer .d-flex {
+    margin-bottom: 20px;
+}
+
+footer .pl-3 {
+    padding-left: 15px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Línea separadora inferior */
+footer .container-fluid {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Derechos reservados */
+footer .m-0.text-center {
+    font-size: 0.85rem;
+}
+
+footer .m-0.text-center a {
+    color: #609db4;
+}
