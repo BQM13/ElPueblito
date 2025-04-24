@@ -240,3 +240,57 @@ footer .m-0.text-center {
 footer .m-0.text-center a {
     color: #609db4;
 }
+
+.label-form {
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  
+  input[type="text"] {
+    padding: 0.75rem 1rem;
+    border: 2px solid #609db4;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #263f4f;
+  }
+  
+  .boton-acciones {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .btn-accion {
+    background-color: #263f4f;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-accion:hover {
+    background-color: #609db4;
+  }
+  
+  /* Botón especial para eliminar */
+  .btn-accion.eliminar {
+    background-color: #dc3545;
+  }
+  
+  .btn-accion.eliminar:hover {
+    background-color: #a71d2a;
+  }
+  

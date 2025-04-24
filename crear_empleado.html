@@ -32,50 +32,31 @@
 
   <main>
     <div class="login-container">
-      <h1>Editar datos</h1>
-      <p>Modifica los datos personales de tu cuenta según tus necesidades</p>
-      <form id="formCedula">
+      <h1>Crear cuenta de personal</h1>
+      <p>Crear cuenta de un empleado con sus respectivos datos personales</p>
+  
+      <form id="formEditarDatos">
         <label for="cedula" class="label-form">Cedula</label>
         <input type="text" id="cedula" name="cedula" placeholder="11111111" class="input-form" required />
-        <button type="submit">Actualizar cedula</button>
+  
+        <label for="nombre" class="label-form">Primer nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Juan Carlos" class="input-form" required />
+  
+        <label for="PrimerApellido" class="label-form">Primer Apellido</label>
+        <input type="text" id="PrimerApellido" name="PrimerApellido" placeholder="Alvarado" class="input-form" required />
+  
+        <label for="SegundoApellido" class="label-form">Segundo Apellido</label>
+        <input type="text" id="SegundoApellido" name="SegundoApellido" placeholder="Vega" class="input-form" required />
+  
+        <label for="mail" class="label-form">Correo electrónico</label>
+        <input type="email" id="mail" name="mail" placeholder="proyecto@gmail.com" class="input-form" required />
+  
+        <label for="password" class="label-form">Contraseña</label>
+        <input type="password" id="password" name="password" placeholder="password" class="input-form" required />
+  
+        <button type="submit">Crear cuenta</button>
       </form>
-      <!-- Modificar Primer Nombre -->
-<form id="formNombre">
-  <label for="nombre" class="label-form">Primer nombre</label>
-  <input type="text" id="nombre" name="nombre" placeholder="Juan Carlos" class="input-form" required />
-  <button type="submit">Actualizar nombre</button>
-</form>
-
-<!-- Modificar Primer Apellido -->
-<form id="formPrimerApellido">
-  <label for="PrimerApellido" class="label-form">Primer Apellido</label>
-  <input type="text" id="PrimerApellido" name="PrimerApellido" placeholder="Alvarado" class="input-form" required />
-  <button type="submit">Actualizar primer apellido</button>
-</form>
-
-<!-- Modificar Segundo Apellido -->
-<form id="formSegundoApellido">
-  <label for="SegundoApellido" class="label-form">Segundo Apellido</label>
-  <input type="text" id="SegundoApellido" name="SegundoApellido" placeholder="Vega" class="input-form" required />
-  <button type="submit">Actualizar segundo apellido</button>
-</form>
-
-<!-- Modificar Correo -->
-<form id="formCorreo">
-  <label for="mail" class="label-form">Correo electrónico</label>
-  <input type="email" id="mail" name="mail" placeholder="proyecto@gmail.com" class="input-form" required />
-  <button type="submit">Actualizar correo</button>
-</form>
-
-<!-- Modificar Contraseña -->
-<form id="formPassword">
-  <label for="password" class="label-form">Contraseña</label>
-  <input type="password" id="password" name="password" placeholder="password" class="input-form" required />
-  <button type="submit">Actualizar contraseña</button>
-</form>
-
     </div>
-    
   </main>
 
   <footer>
@@ -157,12 +138,44 @@
     
 </footer>
 
-  <script>
-    document.getElementById("recuperarForm").addEventListener("submit", function(e) {
+<script>
+    document.getElementById('formEditarDatos').addEventListener('submit', async function (e) {
       e.preventDefault();
-      alert("Se han enviado las instrucciones de recuperación a tu correo.");
-      window.location.href = "login.html";
+  
+      const data = {
+        cedula: document.getElementById('cedula').value,
+        nombre: document.getElementById('nombre').value,
+        PrimerApellido: document.getElementById('PrimerApellido').value,
+        SegundoApellido: document.getElementById('SegundoApellido').value,
+        mail: document.getElementById('mail').value,
+        password: document.getElementById('password').value
+      };
+  
+      try {
+        const res = await fetch('/api/personal/crear', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+  
+        const mensaje = await res.text();
+  
+        if (!res.ok) {
+          // Si el estado no es 200-299, mostrar error
+          alert("⚠️ Error al crear la cuenta: " + mensaje);
+        } else {
+          alert("✅ " + mensaje);
+          // Opcional: redireccionar a otra página
+          // window.location.href = "/login.html";
+        }
+  
+      } catch (error) {
+        alert("❌ Error de conexión al servidor. Intenta más tarde.");
+        console.error(error);
+      }
     });
   </script>
+  
+    
 </body>
 </html>
