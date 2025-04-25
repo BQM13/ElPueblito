@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modificar Residente</title>
+  <link rel="stylesheet" href="css/style_login.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importar jQuery -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+   <!-- Favicon -->
+   <link href="img/favicon.ico" rel="icon" type="image/x-icon" />
+    <!-- Flaticon Font -->
+    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <a href="index.html" class="nav-item-login">Inicio</a>
+        <a href="about.html" class="nav-item-login">Quienes somos</a>
+        <a href="programas.html" class="nav-item-login">Programas</a>
+        <a href="ayuda.html" class="nav-item-login">Cómo ayudar</a>
+        <a href="contacto.html" class="nav-item nav-link">Contacto</a>
+        <a href="login.html" class="nav-item-login">Cerrar sesión</a>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <h1>Editar datos</h1>
+      <p>Modifica los datos personales de un residente</p>
+  
+      <!-- Buscar por cédula -->
+      <form id="buscarForm">
+        <label for="cedula">Cédula</label>
+        <input type="text" name="cedula" id="cedula" placeholder="Cédula" class="input-form" required />
+        <button type="submit">Buscar Residente</button>
+      </form>
+    
+      <div id="datosResidente" style="display:none;">
+        <form id="modificarForm">
+          <input type="hidden" name="cedula" id="cedula_residente" />
+    
+          <label for="nombre">Nombre</label>
+          <input type="text" name="nombre" id="nombre" class="input-form" required />
+    
+          <label for="primerApellido">Primer Apellido</label>
+          <input type="text" name="primerApellido" id="primerApellido" class="input-form" required />
+    
+          <label for="segundoApellido">Segundo Apellido</label>
+          <input type="text" name="segundoApellido" id="segundoApellido" class="input-form" required />
+    
+          <label for="correo">Correo electrónico</label>
+          <input type="email" name="correo" id="correo" class="input-form" required />
+    
+          <label for="contrasena">Contraseña</label>
+          <input type="password" name="contrasena" id="contrasena" class="input-form" required />
+    
+          <button type="submit">Modificar Residente</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Evento para el formulario de búsqueda
+    $('#buscarForm').submit(function(e) {
+      e.preventDefault();
+      var cedula = $('#cedula').val();
+
+      // Realizar la búsqueda de datos con AJAX
+      $.ajax({
+        url: 'buscar_residente_ajax.php',
+        type: 'POST',
+        data: { cedula: cedula },
+        success: function(response) {
+          var data = JSON.parse(response);
+          
+          if (data.status == 'success') {
+            // Mostrar los datos del residente
+            $('#cedula_residente').val(data.residente.cedula);
+            $('#nombre').val(data.residente.nombre);
+            $('#primerApellido').val(data.residente.primerApellido);
+            $('#segundoApellido').val(data.residente.segundoApellido);
+            $('#correo').val(data.residente.correo);
+            $('#datosResidente').show(); // Mostrar el formulario de edición
+          } else {
+            alert('No se encontró un residente con esa cédula.');
+            $('#datosResidente').hide();
+          }
+        }
+      });
+    });
+
+    // Evento para el formulario de modificación
+    $('#modificarForm').submit(function(e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+
+      // Realizar la actualización con AJAX
+      $.ajax({
+        url: 'modificar_residente_ajax.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          if (response == 'success') {
+            alert('Datos actualizados correctamente');
+          } else {
+            alert('Hubo un error al actualizar los datos.');
+          }
+        }
+      });
+    });
+  </script>
+  
+
+  <footer>
+    <div
+  class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5"
+>
+  <div class="row pt-5">
+    <div class="col-lg-3 col-md-6 mb-5">
+      <a
+        href=""
+        class="navbar-brand font-weight-bold text-primary m-0 mb-4 p-0"
+        style="font-size: 40px; line-height: 40px"
+      >
+      <img src="img/logo_transparente.png" alt="Pueblito" style="height: 35px;">
+        <span class="text-white">Orfanato El Pueblito</span>
+      </a>
+    
+      <div class="d-flex justify-content-start mt-4">
+        <a
+          class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+          style="width: 38px; height: 38px"
+          href="#"
+          ><i class="fab fa-twitter"></i
+        ></a>
+        <a
+          class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+          style="width: 38px; height: 38px"
+          href="#"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+        <a
+          class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+          style="width: 38px; height: 38px"
+          href="#"
+          ><i class="fab fa-linkedin-in"></i
+        ></a>
+        <a
+          class="btn btn-outline-primary rounded-circle text-center mr-2 px-0"
+          style="width: 38px; height: 38px"
+          href="#"
+          ><i class="fab fa-instagram"></i
+        ></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-5">
+      <h3 class="text-primary mb-4">Información</h3>
+      <div class="d-flex">
+        <h4 class="fa fa-map-marker-alt text-primary"></h4>
+        <div class="pl-3">
+          <h5 class="text-white">Dirección</h5>
+          <p>1 km al sur del parque, Paraíso, Cartago, Costa Rica</p>
+        </div>
+      </div>
+      <div class="d-flex">
+        <h4 class="fa fa-envelope text-primary"></h4>
+        <div class="pl-3">
+          <h5 class="text-white">Correo</h5>
+          <p>contacto@elpueblito.com</p>
+        </div>
+      </div>
+      <div class="d-flex">
+        <h4 class="fa fa-phone-alt text-primary"></h4>
+        <div class="pl-3">
+          <h5 class="text-white">Telefono</h5>
+          <p>+506 2574-7464</p>
+        </div>
+      </div>
+    </div>
+   
+  <div
+    class="container-fluid pt-5"
+    style="border-top: 1px solid rgba(23, 162, 184, 0.2) ;"
+  >
+    <p class="m-0 text-center text-white">
+      &copy;
+      <a class="text-primary font-weight-bold" href="#">Orfanato El Pueblito</a>.
+      Todos los derechos reservados
+
+    
+</footer>
+
+</body>
+</html>
