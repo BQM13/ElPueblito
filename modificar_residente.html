@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Recuperar Contraseña</title>
+  <title>Modificar Residente</title>
   <link rel="stylesheet" href="css/style_login.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importar jQuery -->
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
    <!-- Favicon -->
    <link href="img/favicon.ico" rel="icon" type="image/x-icon" />
@@ -36,45 +37,87 @@
       <p>Modifica los datos personales de un residente</p>
   
       <!-- Buscar por cédula -->
-      <form id="formCedula">
-        <label for="cedula" class="label-form">Cédula</label>
-        <input type="text" id="cedula" name="cedula" placeholder="111111111" class="input-form" required />
-        <button type="submit">Buscar</button>
+      <form id="buscarForm">
+        <label for="cedula">Cédula</label>
+        <input type="text" name="cedula" id="cedula" placeholder="Cédula" class="input-form" required />
+        <button type="submit">Buscar Residente</button>
       </form>
-  
-      <!-- Los formularios siguientes están desactivados al inicio -->
-  
-      <form id="formNombre">
-        <label for="nombre" class="label-form">Primer nombre</label>
-        <input type="text" id="nombre" name="nombre" placeholder="Juan Carlos" class="input-form" required disabled />
-        <button type="submit" disabled>Actualizar nombre</button>
-      </form>
-  
-      <form id="formPrimerApellido">
-        <label for="PrimerApellido" class="label-form">Primer Apellido</label>
-        <input type="text" id="PrimerApellido" name="PrimerApellido" placeholder="Alvarado" class="input-form" required disabled />
-        <button type="submit" disabled>Actualizar primer apellido</button>
-      </form>
-  
-      <form id="formSegundoApellido">
-        <label for="SegundoApellido" class="label-form">Segundo Apellido</label>
-        <input type="text" id="SegundoApellido" name="SegundoApellido" placeholder="Vega" class="input-form" required disabled />
-        <button type="submit" disabled>Actualizar segundo apellido</button>
-      </form>
-  
-      <form id="formCorreo">
-        <label for="mail" class="label-form">Correo electrónico</label>
-        <input type="email" id="mail" name="mail" placeholder="proyecto@gmail.com" class="input-form" required disabled />
-        <button type="submit" disabled>Actualizar correo</button>
-      </form>
-  
-      <form id="formPassword">
-        <label for="password" class="label-form">Contraseña</label>
-        <input type="password" id="password" name="password" placeholder="password" class="input-form" required disabled />
-        <button type="submit" disabled>Actualizar contraseña</button>
-      </form>
+    
+      <div id="datosResidente" style="display:none;">
+        <form id="modificarForm">
+          <input type="hidden" name="cedula" id="cedula_residente" />
+    
+          <label for="nombre">Nombre</label>
+          <input type="text" name="nombre" id="nombre" class="input-form" required />
+    
+          <label for="primerApellido">Primer Apellido</label>
+          <input type="text" name="primerApellido" id="primerApellido" class="input-form" required />
+    
+          <label for="segundoApellido">Segundo Apellido</label>
+          <input type="text" name="segundoApellido" id="segundoApellido" class="input-form" required />
+    
+          <label for="correo">Correo electrónico</label>
+          <input type="email" name="correo" id="correo" class="input-form" required />
+    
+          <label for="contrasena">Contraseña</label>
+          <input type="password" name="contrasena" id="contrasena" class="input-form" required />
+    
+          <button type="submit">Modificar Residente</button>
+        </form>
+      </div>
     </div>
   </main>
+
+  <script>
+    // Evento para el formulario de búsqueda
+    $('#buscarForm').submit(function(e) {
+      e.preventDefault();
+      var cedula = $('#cedula').val();
+
+      // Realizar la búsqueda de datos con AJAX
+      $.ajax({
+        url: 'buscar_residente_ajax.php',
+        type: 'POST',
+        data: { cedula: cedula },
+        success: function(response) {
+          var data = JSON.parse(response);
+          
+          if (data.status == 'success') {
+            // Mostrar los datos del residente
+            $('#cedula_residente').val(data.residente.cedula);
+            $('#nombre').val(data.residente.nombre);
+            $('#primerApellido').val(data.residente.primerApellido);
+            $('#segundoApellido').val(data.residente.segundoApellido);
+            $('#correo').val(data.residente.correo);
+            $('#datosResidente').show(); // Mostrar el formulario de edición
+          } else {
+            alert('No se encontró un residente con esa cédula.');
+            $('#datosResidente').hide();
+          }
+        }
+      });
+    });
+
+    // Evento para el formulario de modificación
+    $('#modificarForm').submit(function(e) {
+      e.preventDefault();
+      var formData = $(this).serialize();
+
+      // Realizar la actualización con AJAX
+      $.ajax({
+        url: 'modificar_residente_ajax.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+          if (response == 'success') {
+            alert('Datos actualizados correctamente');
+          } else {
+            alert('Hubo un error al actualizar los datos.');
+          }
+        }
+      });
+    });
+  </script>
   
 
   <footer>
@@ -156,33 +199,5 @@
     
 </footer>
 
-  <script>
-    document.getElementById("recuperarForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("Se han enviado las instrucciones de recuperación a tu correo.");
-      window.location.href = "login.html";
-    });
-    document.getElementById("formCedula").addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const cedula = document.getElementById("cedula").value.trim();
-
-    // Simulación: si la cédula coincide, se habilitan los campos
-    if (cedula === "111111111") {
-      alert("Cédula encontrada. Puedes modificar los datos.");
-
-      // Habilitar todos los inputs y botones de los demás formularios
-      document.querySelectorAll('.login-container form:not(#formCedula) input').forEach(input => {
-        input.disabled = false;
-      });
-
-      document.querySelectorAll('.login-container form:not(#formCedula) button').forEach(button => {
-        button.disabled = false;
-      });
-    } else {
-      alert("Cédula no encontrada. Verifica que esté registrada.");
-    }
-  });
-  </script>
 </body>
 </html>

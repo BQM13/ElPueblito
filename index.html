@@ -111,10 +111,11 @@
                 <h1 class="text-white m-0">Formulario</h1>
               </div>
               <div class="card-body rounded-bottom bg-primary p-5">
-                <form>
+                <form method="POST" action="procesar_cita.php">
                   <div class="form-group">
                     <input
                       type="text"
+                      name = "nombre"
                       class="form-control border-0 p-4"
                       placeholder="Tu nombre"
                       required="required"
@@ -123,6 +124,7 @@
                   <div class="form-group">
                     <input
                       type="email"
+                      name="correo"
                       class="form-control border-0 p-4"
                       placeholder="Tu Email"
                       required="required"
