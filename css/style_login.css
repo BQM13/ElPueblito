@@ -294,3 +294,21 @@ footer .m-0.text-center a {
     background-color: #a71d2a;
   }
   
+  .btn-volver {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-volver:hover {
+    background-color: #0056b3;
+  }
+  
